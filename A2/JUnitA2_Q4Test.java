@@ -73,9 +73,9 @@ public class JUnitA2_Q4Test {
      *   deadlines = [2, 2, 2]
      *   weights   = [10, 50, 20]
      * <p>
-     * Expected homework plan (length 2): [2, 1]
-     * <br>Explanation: The highest weight (50, index 1) is scheduled at slot 1.
-     * Assignment index 2 (weight 20) then takes slot 0; index 0 is dropped.
+     * Expected homework plan (length 2): [20, 50]
+     * <br>Explanation: The highest weight (50, from assignment index 1) is scheduled at slot 1,
+     * and the next highest weight (20, from assignment index 2) takes slot 0; assignment index 0 is dropped.
      */
     @Test
     @DisplayName("Test 2: Conflict with Tight Deadlines")
@@ -84,16 +84,16 @@ public class JUnitA2_Q4Test {
         int[] weights   = {10, 50, 20};
         HW_Sched sched = new HW_Sched(weights, deadlines, 3);
         int[] result = sched.SelectAssignments();
-        int[] expected = {2, 1};
+        int[] expected = {20, 50}; // Now returning weights instead of assignment indices.
         System.out.println(SEPARATOR);
         System.out.println("Testing HW_Sched.SelectAssignments() with:");
         System.out.println("Deadlines: " + Arrays.toString(deadlines));
         System.out.println("Weights  : " + Arrays.toString(weights));
-        System.out.println("Expected schedule: " + Arrays.toString(expected));
-        System.out.println("Received schedule: " + Arrays.toString(result));
+        System.out.println("Expected schedule (weights): " + Arrays.toString(expected));
+        System.out.println("Received schedule (weights): " + Arrays.toString(result));
         totalTests++;
         try {
-            assertArrayEquals(expected, result, "Conflict with tight deadlines failed.");
+            assertArrayEquals(expected, result, "Conflict with tight deadlines test failed.");
             System.out.println("\u001B[32mTest Passed\u001B[0m");
             testsPassed++;
         } catch(AssertionError e) {
